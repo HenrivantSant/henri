@@ -1,0 +1,12 @@
+parameters:
+# ...
+
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: true
+
+  Henri\Application\:
+    resource: 'vendor/henrivantsant/henri/Application/*'
+    exclude: 'vendor/henrivantsant/henri/Application/Bootstrap/*'

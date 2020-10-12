@@ -30,8 +30,8 @@
         "symfony/maker-bundle": "^1.14"
     },
     "autoload": {
-        "psr-0": {
-            "Henri\\": "src/"
+        "psr-4": {
+            "Henri\\": ""
         }
     }
 }

@@ -8,4 +8,4 @@ services:
     public: true
 
   Henri\Framework\:
-    resource: 'vendor/henrivantsant/henri/src/Framework/*'
+    resource: 'vendor/henrivantsant/henri/Framework/*'

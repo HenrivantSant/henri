@@ -6,10 +6,10 @@
  */
 
 // set up autoloading
-include_once INCLUDE_DIR . '/vendor/henrivantsant/henri/src/Application/Bootstrap/Autoloading/Autoload.php';
+include_once INCLUDE_DIR . '/vendor/henrivantsant/henri/Application/Bootstrap/Autoloading/Autoload.php';
 
 // set up DI
-include_once INCLUDE_DIR . '/vendor/henrivantsant/henri/src/Application/Bootstrap/DependencyInjection/DependencyInjection.php';
+include_once INCLUDE_DIR . '/vendor/henrivantsant/henri/Application/Bootstrap/DependencyInjection/DependencyInjection.php';
 
 // Build to application
 global $containerBuilder;
