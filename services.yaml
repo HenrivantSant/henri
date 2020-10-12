@@ -1,0 +1,12 @@
+imports:
+  - { resource: src/henri/Framework/services.yaml }
+  - { resource: src/henri/Application/services.yaml}
+
+parameters:
+# ...
+
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: true

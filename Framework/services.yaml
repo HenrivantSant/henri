@@ -1,0 +1,11 @@
+parameters:
+# ...
+
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: true
+
+  Henri\Framework\:
+    resource: 'src/henri/Framework/*'
