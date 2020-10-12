@@ -8,5 +8,5 @@ services:
     public: true
 
   Henri\Application\:
-    resource: 'src/henri/Application/*'
-    exclude: 'src/henri/Application/Bootstrap/*'
+    resource: 'vendor/henrivantsant/henri/Application/*'
+    exclude: 'vendor/henrivantsant/henri/Application/Bootstrap/*'

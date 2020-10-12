@@ -1,6 +1,6 @@
 imports:
-  - { resource: src/henri/Framework/services.yaml }
-  - { resource: src/henri/Application/services.yaml}
+  - { resource: vendor/henrivantsant/henri/Framework/services.yaml }
+  - { resource: vendor/henrivantsant/henri/Application/services.yaml}
 
 parameters:
 # ...
