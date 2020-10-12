@@ -1,0 +1,6 @@
+.idea
+config.yaml
+composer.lock
+composer.phar
+/vendor/*
+!/vendor/henri
