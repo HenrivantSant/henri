@@ -64,7 +64,7 @@ class YamlFileLoader {
 		}
 
 		// Framework config
-		$path   = INCLUDE_DIR . '/src/henri/config.yaml';
+		$path   = INCLUDE_DIR . '/vendor/henrivantsant/henri/config.yaml';
 		if (!$this->fileExists($path)) {
 			throw new RuntimeException($path . ' does not exist', 500);
 		}
