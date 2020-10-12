@@ -5,7 +5,6 @@
     "keywords": ["api","framework","symfony", "simple"],
     "homepage": "https://github.com/HenrivantSant/henri",
     "license": "MIT",
-    "minimum-stability": "stable",
     "authors": [
         {
             "name": "Henri van t Sant",
