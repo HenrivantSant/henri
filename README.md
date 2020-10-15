@@ -43,6 +43,12 @@ This frame is not intended for building websites or big applications. The purpos
 	1. Default system events
 	1. How to subscribe to events
 	1. How to create your events
+1. Authentication
+	1. Authentication levels
+	1. API Key
+	1. JWT
+	1. User logins
+	1. Add your level and/or authentication
 
 ## 1. Routing
 ### Controllers
@@ -76,3 +82,11 @@ This frame is not intended for building websites or big applications. The purpos
 ### Default system events
 ### How to subscribe to events
 ### How to create your events
+
+## Authentication
+### Authentication levels
+### Authentication clients
+### API Key
+### JWT
+### User logins
+### Add your level and/or authentication
