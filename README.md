@@ -7,7 +7,7 @@ This is a simple, fast and basic PHP framework meant to write API's or simple pr
 under the hood it uses a lot of the magic from [Symfony](https://symfony.com/), [Dibi](https://github.com/dg/dibi), [Unirest](https://github.com/Kong/unirest-php) and [Firebase](https://github.com/firebase/php-jwt).
 
 ### Purpose  
-This frame is not intended for building websites or big applications. The purpose of this framework is to provide a simple set of basic tools to build simple services, like: 
+This framework is not intended for building websites or big applications. The purpose of this framework is to provide a simple set of basic tools to build simple services, like: 
 - Simple webservice
 - API proxy to bundle several APIs endpoints into one
 - Data caching layer
