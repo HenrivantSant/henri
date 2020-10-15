@@ -26,8 +26,8 @@ under the hood it uses a lot of [Symfony](https://symfony.com/), [Dibi](https://
 	1. Request service
 1. Command Line
 	1. Intro
-	1. Make your own commands
 	1. Default commands
+	1. Make your own commands
 1. Annotations
 	1. What & why annotations
 	1. How use your own annotations
@@ -37,17 +37,34 @@ under the hood it uses a lot of [Symfony](https://symfony.com/), [Dibi](https://
 	1. How to create your events
 
 ## 1. Routing
+### Controllers
+### Route annotation
 
 ## 2. Dependency Injection
 
 ## 3. Configuration
+### Yaml
+### Reading the configuration
+### Writing the configuration
 
 ## 4. Database handling
+### Database layer
+### Entities
+### Entity Manager
+### Entity Manager List
+### Command line interface
 
 ## 5. Making (curl) requests
 
 ## 6. Command line interface
+### Default commands
+### Make your command
 
 ## 7. Annotations
+### What & why annotations
+### How use your own annotations
 
 ## 8. Events & Subscribers
+### Default system events
+### How to subscribe to events
+### How to create your events
