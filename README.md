@@ -49,6 +49,11 @@ This framework is not intended for building websites or big applications. The pu
 	1. JWT
 	1. User logins
 	1. Add your level and/or authentication
+1. Users
+	1. User management
+	1. Create a user
+	1. Update user
+	1. User authentication
 1. What's next!
 	1. Native logging interface (status: in development)
 	Logging implementation using [Monolog](https://github.com/Seldaek/monolog)
