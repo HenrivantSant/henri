@@ -24,7 +24,8 @@
         "doctrine/annotations": "^1.8",
         "mashape/unirest-php": "^3.0",
         "firebase/php-jwt": "^5.2",
-        "ext-json": "*"
+        "ext-json": "*",
+        "monolog/monolog": "^2.1"
     },
     "require-dev": {
         "symfony/maker-bundle": "^1.14"

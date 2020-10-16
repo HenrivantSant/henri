@@ -8,6 +8,7 @@
 namespace Henri\Framework\Model\Entity;
 
 use Doctrine\Common\Annotations\AnnotationReader;
+use Exception;
 use Henri\Framework\Database\DatabaseDriver;
 use Henri\Framework\Model\Entity\Helper\Query;
 use Henri\Framework\Model\Entity\Helper\Translate;
@@ -218,7 +219,7 @@ abstract class Entity
 	 */
 	public function delete() : bool {
 		if (!isset($this->{$this->primaryKey}) || !$this->{$this->primaryKey}) {
-			throw new \Exception('No item found to remove', 500);
+			throw new Exception('No item found to remove', 500);
 		}
 
 		$this->database->query(
@@ -284,17 +285,13 @@ abstract class Entity
 	 * @param $propertyName
 	 *
 	 * @return mixed
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	protected function onBeforeSave($value, $propertyName) {
 		if (array_key_exists($propertyName, $this->propertyActions['translate'])) {
 			foreach ($this->propertyActions['translate'][$propertyName] as $action) {
 				if (!method_exists($this->helperTranslate, $action)) {
-					if (_HDEBUG || _HDEV) {
-						throw new \Exception('Method ' . $action . ' not found in ' . get_class($this->helperTranslate), 500);
-					} else {
-						continue;
-					}
+                    throw new Exception('Method ' . $action . ' not found in ' . get_class($this->helperTranslate), 500);
 				}
 				$value = $this->helperTranslate->{$action}($value, true);
 			}
@@ -310,17 +307,13 @@ abstract class Entity
 	 * @param $propertyName
 	 *
 	 * @return mixed
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	protected function onAfterLoad($value, $propertyName) {
 		if (strlen($value) && array_key_exists($propertyName, $this->propertyActions['translate'])) {
 			foreach ($this->propertyActions['translate'][$propertyName] as $action) {
 				if (!method_exists($this->helperTranslate, $action)) {
-					if (_HDEBUG || _HDEV) {
-						throw new \Exception('Method ' . $action . ' not found in ' . get_class($this->helperTranslate), 500);
-					} else {
-						continue;
-					}
+                    throw new Exception('Method ' . $action . ' not found in ' . get_class($this->helperTranslate), 500);
 				}
 				$value = $this->helperTranslate->{$action}($value, false);
 			}
@@ -335,11 +328,11 @@ abstract class Entity
 	 * @param string $propertyName  name of the property to get
 	 *
 	 * @return array
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function getPropertyWhereClause(string $propertyName) : array {
 		if (!$this->hasProperty($propertyName)) {
-			throw new \Exception('Property ' . $propertyName . ' not found', 500);
+			throw new Exception('Property ' . $propertyName . ' not found', 500);
 		}
 
 		return array(
@@ -365,18 +358,18 @@ abstract class Entity
 	 * @param string $property
 	 *
 	 * @return mixed
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function get(string $property) {
 		// Only this class itself or EntityManager are allowed access
 		$calling_class = debug_backtrace(1, 1)[0]['class'];
 		if (!is_a($calling_class, 'Henri\Framework\Model\Entity\EntityManager', true) &&
 				!is_a($calling_class, 'Henri\Framework\Model\Entity\Entity', true)) {
-			throw new \Exception('Access to method not allowed', 500);
+			throw new Exception('Access to method not allowed', 500);
 		}
 
 		if (!property_exists($this, $property)) {
-			throw new \Exception('Property not found', 500);
+			throw new Exception('Property not found', 500);
 		}
 
 		return $this->{$property};
@@ -388,18 +381,18 @@ abstract class Entity
 	 * @param string $property
 	 *
 	 * @return string
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function getPropertyDBName(string $property) : string {
 		// Only this class itself or EntityManager are allowed access
 		$calling_class = debug_backtrace(1, 1)[0]['class'];
 		if (!is_a($calling_class, 'Henri\Framework\Model\Entity\EntityManager', true) &&
 				!is_a($calling_class, 'Henri\Framework\Model\Entity\Entity', true)) {
-			throw new \Exception('Access to method not allowed', 500);
+			throw new Exception('Access to method not allowed', 500);
 		}
 
 		if (!$this->hasProperty($property)) {
-			throw new \Exception('Property ' . $property . ' does not exist for ' . get_class($this), 500);
+			throw new Exception('Property ' . $property . ' does not exist for ' . get_class($this), 500);
 		}
 
 		return $this->propertyMap[$property];
@@ -447,6 +440,7 @@ abstract class Entity
 				$propertyProps->primary     = $annotation->primary;
 				$propertyProps->translate   = $annotation->translate;
 				$propertyProps->empty       = $annotation->empty;
+				$propertyProps->unique      = $annotation->unique ?? false;
 				$this->propertyProps[$property->name] = $propertyProps;
 			}
 
@@ -458,7 +452,7 @@ abstract class Entity
 			// Check for primary key
 			if (isset($property->name) && $annotation && isset($annotation->primary)) {
 				if ($annotation->primary && isset($this->primaryKey)) {
-					throw new \Exception('Multiple primary keys found', 500);
+					throw new Exception('Multiple primary keys found', 500);
 				}
 
 				if ($annotation->primary) {
@@ -541,12 +535,12 @@ abstract class Entity
 		if (is_null($currentColumns)) {
 			// Table does not exist yet
 			$this->createTable(false);
-			throw new \Exception('Table ' . $this->tableNamePrefixed . ' did not exist yet. It has been created.');
+			throw new Exception('Table ' . $this->tableNamePrefixed . ' did not exist yet. It has been created.');
 		}
 		if (!is_null($currentColumns) && $dropTableIfExists) {
             // Table dropped and newly created
             $this->createTable(false);
-            throw new \Exception('Table ' . $this->tableNamePrefixed . ' has been dropped and recreated.');
+            throw new Exception('Table ' . $this->tableNamePrefixed . ' has been dropped and recreated.');
         }
 
 		$query = 'ALTER TABLE ' . $this->tableNamePrefixed . ' ';

@@ -8,16 +8,26 @@
 require INCLUDE_DIR . '/vendor/autoload.php';
 
 spl_autoload_register(function($className) {
-	$classPath = lcfirst(str_replace("\\", DIRECTORY_SEPARATOR, $className) . '.php');
+    $classPathLc = lcfirst(str_replace("\\", DIRECTORY_SEPARATOR, $className) . '.php');
+    $classPathUc = ucfirst(str_replace("\\", DIRECTORY_SEPARATOR, $className) . '.php');
 
-	// Check if class exists
-	if (file_exists(INCLUDE_DIR . '/vendor/' . $classPath)) {
-		include_once INCLUDE_DIR . '/vendor/' . $classPath;
-	}
-	if (file_exists(INCLUDE_DIR . '/src/' . $classPath)) {
-		include_once INCLUDE_DIR . '/src/' . $classPath;
-	}
-	if (file_exists(INCLUDE_DIR . '/app/' . $classPath)) {
-		include_once INCLUDE_DIR . '/app/' . $classPath;
-	}
+    // Check if class exists
+    if (file_exists(INCLUDE_DIR . '/vendor/' . $classPathLc)) {
+        include_once INCLUDE_DIR . '/vendor/' . $classPathLc;
+    }
+    if (file_exists(INCLUDE_DIR . '/vendor/' . $classPathUc)) {
+        include_once INCLUDE_DIR . '/vendor/' . $classPathUc;
+    }
+    if (file_exists(INCLUDE_DIR . '/src/' . $classPathLc)) {
+        include_once INCLUDE_DIR . '/src/' . $classPathLc;
+    }
+    if (file_exists(INCLUDE_DIR . '/src/' . $classPathUc)) {
+        include_once INCLUDE_DIR . '/src/' . $classPathUc;
+    }
+    if (file_exists(INCLUDE_DIR . '/app/' . $classPathLc)) {
+        include_once INCLUDE_DIR . '/app/' . $classPathLc;
+    }
+    if (file_exists(INCLUDE_DIR . '/app/' . $classPathUc)) {
+        include_once INCLUDE_DIR . '/app/' . $classPathUc;
+    }
 });

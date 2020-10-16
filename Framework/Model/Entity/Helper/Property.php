@@ -69,6 +69,10 @@ class Property {
 			$propertyString .= ' AUTO_INCREMENT';
 		}
 
+		if (!$property->primary && $property->unique) {
+		    $propertyString .= ' UNIQUE';
+        }
+
 		return $propertyString;
 	}
 }

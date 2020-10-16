@@ -47,6 +47,11 @@ class DBRecord {
 	 */
 	public $empty;
 
+    /**
+     * @var bool $unique
+     */
+	public $unique;
+
 
 	/**
 	 * DBRecord constructor.
@@ -60,6 +65,7 @@ class DBRecord {
 		$this->translate  = !empty($values['translate']) ? explode(' ', $values['translate']) : array();
 		$this->length     = !empty($values['length']) ? intval($values['length']) : 0;
 		$this->empty      = !empty($values['empty']) ? boolval($values['empty']) : false;
+		$this->unique     = !empty($values['unique']) ? boolval($values['unique']) : false;
 	}
 
 
