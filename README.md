@@ -23,7 +23,8 @@ This framework is not intended for building websites or big applications. The pu
 	1. Hooking in to the router (route events)
 1. Dependency Injection
 1. Configuration
-	1. Yaml
+	1. Basic setup
+	1. Configuration scopes
 	1. Reading the configuration
 	1. Writing the configuration
 1. Database handling
