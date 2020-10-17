@@ -111,9 +111,46 @@ On the method Bar we expose the route '/bar'/ which will be prefixed with the co
 
 But what if you want a variable like an id? More on the specifics of building the Route Annotation in the chapter 'Route annotation'. 
 
-NOTE: Multiple types can be exposed using a |, so GET|POST|PATCH would match all types. This is not recommended on methods, but can be useful on the constructor. Of the contructor will only allow GET, a method with POST will never resolve as the route prefix will only allow GET.
+NOTE: Multiple types can be exposed using a |, so GET|POST|PATCH would match all three types. This is not recommended on methods, but can be useful on the constructor. Of the contructor will only allow GET, a method with POST will never resolve as the route prefix will only allow GET.
 
 ### Route annotation
+The router will 'harvest' all methods in the controllers classes with a `@Route` annotation, and map those as routes. If a route annotation is used on the contructor (highly recommended) this will be used as a prefix for all methods in this specific controller as explained in the example above.
+
+The annotations comes with the following settings:
+- type = Allowed HTTP methods to call this route (e.g. GET, POST, PATCH, PUT, etc.). There is no filter on this, so you're free to use custom methods as well. Multiple methods can be provided by piping them together like `@Route(type="GET|POST|PUT", route="/bar/", authRequired=false)`. Usually this should only be necessary on the constructor. There is no wildcard to allow all methods as you should normally not direct a GET request for data to the same functionality as a POST request.
+
+This means you could have the same route for different HTTP Methods if you would desire this. You can have an endpoint `/article/[i:id]/`, where the a GET would lead to method which would return the value of the article with the given id, and where PATCH for example to this same endpoint would update the given article. Makes sense to split this into different methods right?
+- route = The route for this method with a leading and closing slash
+- authRequired = Whether any form of authentication is necessary to access this method. When authentication failed, this method will not be reached and the request will be denied access (more on this the chapter Authentication)
+- authLevel = Which level of authentication is needed to access this method (more on this the chapter Authentication)
+```php
+/**
+     * @param array $params
+     *
+     * @Route(type="GET", route="/bar/[i:articleid]", authRequired=false)
+     *
+     * @return JSONResponse
+     */
+    public function getBar( array $params): JSONResponse {
+        // Let's return the article here
+        return new JSONResponse(array('foo bar'));
+    }
+
+    /**
+     * @param array $params
+     *
+     * @Route(type="PATCH", route="/bar/[i:articleid]", authRequired=false)
+     *
+     * @return JSONResponse
+     */
+    public function patchBar( array $params): JSONResponse {
+        // Let's update the article here
+        return new JSONResponse(array('foo bar'));
+    }
+```
+
+#### Variables in urls
+As you can see in the previous example there some weird syntax going on the 
 
 ### Hooking in to the router (Route Events)
 
