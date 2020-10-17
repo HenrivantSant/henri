@@ -202,6 +202,18 @@ Okay so we can use several variables, convenient! How to read this? Easy! The va
 ```
 See how the variable name comes in to play now?
 
+### Reponses
+A controller action must always return a `Henri\Framework\Http\Response` instance. This class itself is abstract and can not be used directly. By default de `Henri\Framework\Http\JSONResponse` is available. This will output the given payload as JSON. You can easily add different Responses as long as they extend from `Henri\Framework\Http\Response`.
+
+TODO: ADD AN EXAMPLE HERE
+
+### Exceptions 
+For some 'simple' responses it's not necessary to give a response. You can simple throw an Exception and the system will catch it, and deal with it accordingly. Those are available right now:
+- `Henri\Framework\Router\Exceptions\BadRequestException` => Will return a 400 status code
+- `Henri\Framework\Router\Exceptions\InternalErrorException` => Will return a 500 status code
+- `Henri\Framework\Router\Exceptions\NotAuthorizedException` => Will return a 401 status code
+- `Henri\Framework\Router\Exceptions\NotFoundException` => Will return a 404 status code
+
 ### Hooking in to the router (Route Events)
 #### Register your own variable types
 #### Adding/modifying routes
@@ -277,10 +289,48 @@ class Foo extends Controller {
 NOTE: Because the container will automatically try to autowire all constructor arguments, this could lead to problems if you do not want them autowired. The easiest way around this is by giving the argument a default value like the `$notAutowired` example.
 
 ## 3. Configuration
-### Yaml
+The system uses [Yaml](https://yaml.org/) for configuration.
+### Basic setup
+The basic configuration setup is as below. Place this config.yaml file in the root of your project.
+```yaml
+database:
+  driver: mysqli
+  host: localhost
+  username: foo
+  password: bar
+  database: foo_bar
+  port: 3306
+  prefix: fkhe32_
+
+routing:
+  baseurl: www.foo.bar
+
+app:
+  mode: develop
+  debug: true
+  timezone: Europe/Amsterdam  
+```
+#### Using app configuration
+It is not unthinkable that you might want some configuration for you specific app. This is possible. First make sure to add a config.yaml file the app directory. This is the entry point for app configuration. Here you import your app config.
+```yaml
+imports:
+  - { resource: app/Foo/config.yaml }
+```
+In the app/Foo directory also place a config.yaml file (as imported above)
+```yaml
+foo:
+    bar: example
+    lorem: ipsum
+```
+
 ### Configuration scopes
+The configuration is build in scopes. The root configuration has a scope as well, but can be ignored. The configuration in the file 'app/Foo/config.yaml' Will be in the scope 'app/Foo'. The idea behind is to isolate configuration in groups.
+
 ### Reading the configuration
-### Writing the configuration
+To read the configuration you will have to inject the `Henri\Framework\Configuration\Configuration` class. Simply calling the 'get' method is enough. To get the value of bar from the example above would like like this `$this->configuration->get('foo.bar', 'app/Foo');`. The first argument is the name of the setting and the second one is the scope. Reading the root configuration doesn't need the scope parameter. Checking whether the app in debug mode would work like this `$this->configuration->get('app.debug');` or getting the database username: `$this->configuration->get('database.username');`.
+
+### Writing the configuration (in code)
+Writing the configuration works in the exact same matter. Note that is not possible to write to non existing settings. Make sure the already exist before. Writing to the foo.bar setting as above would work as `$this->configuration->set('foo.bar', 'writing example', 'app/Foo');`. Note that this works exactly the same as getting a setting, except now the second parameter is the new value you wish to assign.
 
 ## 4. Database handling
 ### Database layer
