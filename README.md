@@ -124,10 +124,10 @@ This means you could have the same route for different HTTP Methods if you would
 - authRequired = Whether any form of authentication is necessary to access this method. When authentication failed, this method will not be reached and the request will be denied access (more on this the chapter Authentication)
 - authLevel = Which level of authentication is needed to access this method (more on this the chapter Authentication)
 ```php
-/**
+    /**
      * @param array $params
      *
-     * @Route(type="GET", route="/bar/[i:articleid]", authRequired=false)
+     * @Route(type="GET", route="/bar/[i:articleid]/", authRequired=false)
      *
      * @return JSONResponse
      */
@@ -139,7 +139,7 @@ This means you could have the same route for different HTTP Methods if you would
     /**
      * @param array $params
      *
-     * @Route(type="PATCH", route="/bar/[i:articleid]", authRequired=false)
+     * @Route(type="PATCH", route="/bar/[i:articleid]/", authRequired=false)
      *
      * @return JSONResponse
      */
@@ -150,9 +150,59 @@ This means you could have the same route for different HTTP Methods if you would
 ```
 
 #### Variables in urls
-As you can see in the previous example there some weird syntax going on the 
+Note: This principle is fork of [AltoRouter](https://github.com/dannyvankooten/AltoRouter).
+As you can see in the previous example there some weird syntax going on in the route parameter in the annotation. This a route 'variable' with the name 'articleid'. Each route can have multiple variables which allows for the url to be for (like in this example) '/bar/123'.
+
+Variables always follow the syntax `[variable_type:variable_name]`. Variable types are predefined and the variable is up to yourself, you will need the variable name to extract it's value later (123 in this case).
+
+Variable types:
+```php
+*                    // Match all request URIs
+[i]                  // Match an integer
+[i:id]               // Match an integer as 'id'
+[a:action]           // Match alphanumeric characters as 'action'
+[h:key]              // Match hexadecimal characters as 'key'
+[:action]            // Match anything up to the next / or end of the URI as 'action'
+[create|edit:action] // Match either 'create' or 'edit' as 'action'
+[*]                  // Catch all (lazy, stops at the next trailing slash)
+[*:trailing]         // Catch all as 'trailing' (lazy)
+[**:trailing]        // Catch all (possessive - will match the rest of the URI)
+.[:format]?          // Match an optional parameter 'format' - a / or . before the block is also optional
+```
+Each of those variable types results in a regex
+```php
+'i'  => '[0-9]++'
+'a'  => '[0-9A-Za-z]++'
+'h'  => '[0-9A-Fa-f]++'
+'*'  => '.+?'
+'**' => '.++'
+''   => '[^/\.]++'
+```
+It is possible to register your custom variable types to router if you wish to match a specific pattern. More on this in the chapter 'Hooking in to the router'.
+
+#### Reading url variables
+Okay so we can use several variables, convenient! How to read this? Easy! The variables which be passed into your function as an array. See the example below.
+```php
+	/**
+	* @param array $params
+	*
+	* @Route(type="GET", route="/bar/[i:articleid]/", authRequired=false)
+	*
+	* @return JSONResponse
+	*/
+	public function getBar( array $params): JSONResponse {
+		// Let's return the article here
+
+		$articleID = $params['articleid'];
+
+		return new JSONResponse(array('foo bar'));
+	}
+```
+See how the variable name comes in to play now?
 
 ### Hooking in to the router (Route Events)
+#### Register your own variable types
+#### Adding/modifying routes
 
 ## 2. Dependency Injection
 DI is in the core of the system. It requires barely any configuration. Under the hood [Symfony Dependency Injection](https://symfony.com/doc/current/components/dependency_injection.html) is used to provide this. See the Symfony documentation for more detailed information on the specifics of DI.
@@ -237,10 +287,89 @@ NOTE: Because the container will automatically try to autowire all constructor a
 ### Command line interface
 
 ## 5. Making (curl) requests
+The system comes with a default Request module for making curl requests. This is powered by [Unirest](https://github.com/Kong/unirest-php). It's as easy passing the `Henri\Framework\Http\Request\Request` class an argument in the constructor of whereever you wish to make a request (this would usually be Service).
+
+MORE DOCUMENTATION ON THIS WILL FOLLOW
 
 ## 6. Command line interface
+The command line presents a clean implementation of the [Symfony Command Line](https://symfony.com/doc/current/components/console.html). See their documentation on how to use the command line general.
+
+### Setup
+It's requires a small setup to get to command line running.
+1. Create a folder 'bin' in your project root
+2. Create a file (without extension) called 'console' with the content from below
+```php
+#!/usr/bin/env php
+<?php
+if (PHP_SAPI !== 'cli') {
+    echo 'bin/console must be run as a CLI application';
+    exit(1);
+}
+
+try {
+    define('INCLUDE_DIR', dirname(__DIR__));
+
+    require INCLUDE_DIR . '/vendor/autoload.php';
+
+    // set up autoloading
+    include_once INCLUDE_DIR . '/vendor/henrivantsant/henri/Application/Bootstrap/Autoloading/Autoload.php';
+
+    // set up DI
+    include_once INCLUDE_DIR . '/vendor/henrivantsant/henri/Application/Bootstrap/DependencyInjection/DependencyInjection.php';
+} catch (\Exception $e) {
+    echo 'Autoload error: ' . $e->getMessage();
+    exit(1);
+}
+
+
+try {
+    // Build to application
+    global $containerBuilder;
+    $app = $containerBuilder->get('Henri\Framework\Console\Console');
+    $app->run();
+} catch (Exception $e) {
+    while($e) {
+        echo $e->getMessage();
+        echo $e->getTraceAsString();
+        echo "\n\n";
+        $e->getPrevious();
+    }
+    exit(0);
+}
+```
+This should be all.
+
 ### Default commands
+The system comes with a batch of useful commands. Get a list of all available commands by running `php bin/console list` from the command line in the root of your project. The specifics of each command will be explained in their respective chapters.
+
 ### Make your command
+It is very easy to add your own command for running tasks, changing settings, creating cron commands, etc.
+```php
+namespace Foo\Command;
+
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
+
+final class FooCommand extends Command {
+
+    // the name of the command (the part after "bin/console")
+    protected static $defaultName = 'foo:bar';
+
+    protected function configure()
+    {
+        // ...
+    }
+
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
+        // ...
+
+        return 0;
+    }
+
+}
+```
 
 ## 7. Annotations
 ### What & why annotations
