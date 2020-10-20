@@ -64,24 +64,33 @@ class Configuration {
 		$this->fileLoader   = $fileLoader;
 		$this->parser       = $parser;
 
-		$settings = $this->parser->parseConfig($fileLoader->getLoadedFiles());
-		$config = $settings['config'];
+		$this->loadConfig();
+	}
 
-		if (!isset($config->general->database)) {
-			throw new \Exception('Database configuration missing', 500);
-		}
-		if (!isset($config->general->routing)) {
-			throw new \Exception('Routing configuration missing', 500);
-		}
-		if (!isset($config->general->app)) {
-			throw new \Exception('Application configuration missing', 500);
-		}
+    /**
+     * Load configuration from files
+     *
+     * @throws \Exception
+     */
+    private function loadConfig(): void {
+        $settings = $this->parser->parseConfig($this->fileLoader->getLoadedFiles());
+        $config = $settings['config'];
 
-		$this->database     = $config->general->database;
-		$this->routing      = $config->general->routing;
-		$this->app          = $config->general->app;
-		$this->general      = $config->general;
-		$this->scoped       = $config->scoped;
+        if (!isset($config->general->database)) {
+            throw new \Exception('Database configuration missing', 500);
+        }
+        if (!isset($config->general->routing)) {
+            throw new \Exception('Routing configuration missing', 500);
+        }
+        if (!isset($config->general->app)) {
+            throw new \Exception('Application configuration missing', 500);
+        }
+
+        $this->database     = $config->general->database;
+        $this->routing      = $config->general->routing;
+        $this->app          = $config->general->app;
+        $this->general      = $config->general;
+        $this->scoped       = $config->scoped;
         $this->mapping      = $settings['map'];
 	}
 
@@ -150,6 +159,9 @@ class Configuration {
         $settings[$split[0]][$split[1]] = $value;
 
         $this->fileLoader->setFile($filename, $settings);
+        
+        // Reload config after file change
+        $this->loadConfig();
 	}
 
 }

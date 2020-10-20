@@ -9,3 +9,4 @@ services:
 
   Henri\Framework\:
     resource: 'vendor/henrivantsant/henri/Framework/*'
+    exclude: ['Monolog/Logger']
