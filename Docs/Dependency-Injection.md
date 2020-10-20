@@ -67,3 +67,5 @@ class Foo extends Controller {
 }
 ``` 
 NOTE: Because the container will automatically try to autowire all constructor arguments, this could lead to problems if you do not want them autowired. The easiest way around this is by giving the argument a default value like the `$notAutowired` example.
+
+&larr; [Routing](https://github.com/HenrivantSant/henri/blob/master/Docs/Routing.md#1-routing) | [Configuration](https://github.com/HenrivantSant/henri/blob/master/Docs/Configuration.md#3-configuration) &rarr;

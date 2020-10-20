@@ -140,3 +140,5 @@ public function getCurrentRoute(): Route {
 	return $match;
 }
 ```
+
+&larr; [Annotations](https://github.com/HenrivantSant/henri/blob/master/Docs/Annotations.md#7-annotations) | [Logging](https://github.com/HenrivantSant/henri/blob/master/Docs/Logging.md#logging) &rarr;

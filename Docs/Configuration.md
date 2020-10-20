@@ -41,3 +41,5 @@ To read the configuration you will have to inject the `Henri\Framework\Configura
 
 ### Writing the configuration (in code)
 Writing the configuration works in the exact same matter. Note that is not possible to write to non existing settings. Make sure the already exist before. Writing to the foo.bar setting as above would work as `$this->configuration->set('foo.bar', 'writing example', 'app/Foo');`. Note that this works exactly the same as getting a setting, except now the second parameter is the new value you wish to assign.
+
+&larr; [Dependency Injection](https://github.com/HenrivantSant/henri/blob/master/Docs/Dependency-Injection.md#2-dependency-injection) | [Database handling](https://github.com/HenrivantSant/henri/blob/master/Docs/Database.md#4-database-handling) &rarr;

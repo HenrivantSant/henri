@@ -4,4 +4,4 @@
 ### Update user
 ### User authentication
 
-← →
+&larr; [Authentication](https://github.com/HenrivantSant/henri/blob/master/Docs/Authentication.md#authentication)

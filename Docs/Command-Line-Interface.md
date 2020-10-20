@@ -77,3 +77,5 @@ final class FooCommand extends Command {
 
 }
 ```
+
+&larr; [Making (curl) requests](https://github.com/HenrivantSant/henri/blob/master/Docs/Making-Requests.md#5-making-curl-requests) | [Annotations](https://github.com/HenrivantSant/henri/blob/master/Docs/Annotations.md#7-annotations) &rarr; 
