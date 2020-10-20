@@ -49,7 +49,7 @@ This should be all.
 ### Default commands
 The system comes with a batch of useful commands. Get a list of all available commands by running `php bin/console list` from the command line in the root of your project. The specifics of each command will be explained in their respective chapters.
 
-### Make your command
+### Create your own commands
 It is very easy to add your own command for running tasks, changing settings, creating cron commands, etc.
 ```php
 namespace Foo\Command;

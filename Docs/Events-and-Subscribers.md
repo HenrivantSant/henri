@@ -64,7 +64,7 @@ final class FooSubscriber implements EventSubscriberInterface {
 
 }
 ```
-### How to create your events
+### How to create your own events
 Events are classes which can be dispatched using the EventDispatcher. You can easily create your own like the example.
 ```php
 namespace Foo\Event;

@@ -16,48 +16,51 @@ This framework is not intended for building websites or big applications. The pu
 - CDN
 
 ## Table of content
-1. Routing
-	1. Controllers
-	1. Route annotation
-	1. Responses
-	1. Hooking in to the router (route events)
-1. Dependency Injection
-1. Configuration
-	1. Basic setup
-	1. Configuration scopes
-	1. Reading the configuration
-	1. Writing the configuration
-1. Database handling
+1. [Routing](https://github.com/HenrivantSant/henri/blob/master/Docs/Routing.md#1-routing)
+	1. [Controllers](https://github.com/HenrivantSant/henri/blob/master/Docs/Routing.md#controllers)
+	1. [Route annotation](https://github.com/HenrivantSant/henri/blob/master/Docs/Routing.md#route-annotation)
+	1. [Responses](https://github.com/HenrivantSant/henri/blob/master/Docs/Routing.md#responses)
+	1. [Exceptions](https://github.com/HenrivantSant/henri/blob/master/Docs/Routing.md#exceptions)
+	1. [Hooking in to the router (route events)](https://github.com/HenrivantSant/henri/blob/master/Docs/Routing.md#route-annotation)
+1. [Dependency Injection](https://github.com/HenrivantSant/henri/blob/master/Docs/Dependency-Injection.md#2-dependency-injection)
+    1. [How to inject](https://github.com/HenrivantSant/henri/blob/master/Docs/Dependency-Injection.md#how-to-inject)
+1. [Configuration](https://github.com/HenrivantSant/henri/blob/master/Docs/Configuration.md#3-configuration)
+	1. [Basic setup](https://github.com/HenrivantSant/henri/blob/master/Docs/Configuration.md#basic-setup)
+	1. [Configuration scopes](https://github.com/HenrivantSant/henri/blob/master/Docs/Configuration.md#configuration-scopes)
+	1. [Reading the configuration](https://github.com/HenrivantSant/henri/blob/master/Docs/Configuration.md#reading-the-configuration)
+	1. [Writing the configuration](https://github.com/HenrivantSant/henri/blob/master/Docs/Configuration.md#writing-the-configuration-in-code)
+1. [Database handling](https://github.com/HenrivantSant/henri/blob/master/Docs/Database.md#4-database-handling)
 	1. Database layer
 	1. Entities
 	1. Entity Manager
 	1. Entity Manager List
 	1. Command line interface
-1. Making (curl) requests
+1. [Making (curl) requests](https://github.com/HenrivantSant/henri/blob/master/Docs/Making-Requests.md#5-making-curl-requests)
 	1. Request service
-1. Command Line
-	1. Intro
-	1. Default commands
-	1. Make your own commands
-1. Annotations
-	1. What & why annotations
-	1. How use your own annotations
-1. Events & subscribers
-	1. Default system events
-	1. How to subscribe to events
-	1. How to create your events
-1. Logging (Monolog)
+1. [Command Line](https://github.com/HenrivantSant/henri/blob/master/Docs/Command-Line-Interface.md#6-command-line-interface)
+	1. [Setup](https://github.com/HenrivantSant/henri/blob/master/Docs/Command-Line-Interface.md#setup)
+	1. [Default commands](https://github.com/HenrivantSant/henri/blob/master/Docs/Command-Line-Interface.md#default-commands)
+	1. [Create your own commands](https://github.com/HenrivantSant/henri/blob/master/Docs/Command-Line-Interface.md#create-your-own-commands)
+1. [Annotations](https://github.com/HenrivantSant/henri/blob/master/Docs/Annotations.md#7-annotations)
+	1. [What & why annotations](https://github.com/HenrivantSant/henri/blob/master/Docs/Annotations.md#what--why-annotations)
+	1. [How use your own annotations](https://github.com/HenrivantSant/henri/blob/master/Docs/Annotations.md#how-use-your-own-annotations)
+1. [Events & subscribers](https://github.com/HenrivantSant/henri/blob/master/Docs/Events-and-Subscribers.md#8-events--subscribers)
+	1. [Default system events](https://github.com/HenrivantSant/henri/blob/master/Docs/Events-and-Subscribers.md#default-system-events)
+	1. [How to subscribe to events](https://github.com/HenrivantSant/henri/blob/master/Docs/Events-and-Subscribers.md#how-to-subscribe-to-events)
+	1. [How to create your own events](https://github.com/HenrivantSant/henri/blob/master/Docs/Events-and-Subscribers.md#how-to-create-your-own-events)
+	1. [Dispatch events](https://github.com/HenrivantSant/henri/blob/master/Docs/Events-and-Subscribers.md#dispatch-events)
+1. [Logging (Monolog)](https://github.com/HenrivantSant/henri/blob/master/Docs/Logging.md#logging)
 	1. Native logging
 	1. Configuration
 	1. Ways of logging
 	1. Use your logger
-1. Authentication
+1. [Authentication](https://github.com/HenrivantSant/henri/blob/master/Docs/Authentication.md#authentication)
 	1. Authentication levels
 	1. API Key
 	1. JWT
 	1. User logins
 	1. Add your level and/or authentication
-1. Users
+1. [Users](https://github.com/HenrivantSant/henri/blob/master/Docs/Users.md#users)
 	1. User management
 	1. Create a user
 	1. Update user
