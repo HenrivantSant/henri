@@ -4,7 +4,7 @@
 
 ## Intro
 This is a simple, fast and basic PHP framework meant to write API's or simple programs in a fast and easy way. This is a not meant as a replacement for other frameworks,
-under the hood it uses a lot of the magic from [Symfony](https://symfony.com/), [Dibi](https://github.com/dg/dibi), [Unirest](https://github.com/Kong/unirest-php) and [Firebase](https://github.com/firebase/php-jwt).
+under the hood it uses a lot of the magic from [Symfony](https://symfony.com/), [Dibi](https://github.com/dg/dibi), [Unirest](https://github.com/Kong/unirest-php), [Monolog](https://github.com/Seldaek/monolog) and [Firebase](https://github.com/firebase/php-jwt).
 
 ### Purpose  
 This framework is not intended for building websites or big applications. The purpose of this framework is to provide a simple set of basic tools to build simple services, like: 
@@ -46,6 +46,11 @@ This framework is not intended for building websites or big applications. The pu
 	1. Default system events
 	1. How to subscribe to events
 	1. How to create your events
+1. Logging (Monolog)
+	1. Native logging
+	1. Configuration
+	1. Ways of logging
+	1. Use your logger
 1. Authentication
 	1. Authentication levels
 	1. API Key
@@ -328,7 +333,7 @@ foo:
 The configuration is build in scopes. The root configuration has a scope as well, but can be ignored. The configuration in the file 'app/Foo/config.yaml' Will be in the scope 'app/Foo'. The idea behind is to isolate configuration in groups.
 
 ### Reading the configuration
-To read the configuration you will have to inject the `Henri\Framework\Configuration\Configuration` class. Simply calling the 'get' method is enough. To get the value of bar from the example above would like like this `$this->configuration->get('foo.bar', 'app/Foo');`. The first argument is the name of the setting and the second one is the scope. Reading the root configuration doesn't need the scope parameter. Checking whether the app in debug mode would work like this `$this->configuration->get('app.debug');` or getting the database username: `$this->configuration->get('database.username');`.
+To read the configuration you will have to inject the `Henri\Framework\Configuration\Configuration` class. Simply calling the 'get' method is enough. To get the value of bar from the example above would like like this `$this->configuration->get('foo.bar', 'app/Foo');`. The first argument is the name of the setting and the second one is the scope. Reading the root configuration uses the 'root' as scope. Checking whether the app in debug mode would work like this `$this->configuration->get('app.debug', 'root');` or getting the database username: `$this->configuration->get('database.username', 'root');`.
 
 ### Writing the configuration (in code)
 Writing the configuration works in the exact same matter. Note that is not possible to write to non existing settings. Make sure the already exist before. Writing to the foo.bar setting as above would work as `$this->configuration->set('foo.bar', 'writing example', 'app/Foo');`. Note that this works exactly the same as getting a setting, except now the second parameter is the new value you wish to assign.
@@ -575,6 +580,12 @@ public function getCurrentRoute(): Route {
 	return $match;
 }
 ```
+
+## Logging
+### Native logging
+### Configuration
+### Ways of logging
+### Use your logger
 
 ## Authentication
 ### Authentication levels
