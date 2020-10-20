@@ -150,3 +150,5 @@ For some 'simple' responses it's not necessary to give a response. You can simpl
 ### Hooking in to the router (Route Events)
 #### Register your own variable types
 #### Adding/modifying routes
+
+[Dependency Injection](https://github.com/HenrivantSant/henri/blob/master/Docs/Dependency-Injection.md#2-dependency-injection) &rarr;
