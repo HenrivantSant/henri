@@ -7,11 +7,6 @@
 
 namespace Henri\Application;
 
-if (PHP_SAPI !== 'cli') {
-    echo 'bin/henri must be run as a CLI application';
-    exit(1);
-}
-
 if (!defined('INCLUDE_DIR')) {
     define('INCLUDE_DIR', dirname(__DIR__, 4));
 }
