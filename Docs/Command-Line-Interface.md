@@ -8,41 +8,12 @@ It's requires a small setup to get to command line running.
 ```php
 #!/usr/bin/env php
 <?php
-if (PHP_SAPI !== 'cli') {
-    echo 'bin/console must be run as a CLI application';
-    exit(1);
-}
+require_once 'vendor/autoload.php';
 
-try {
-    define('INCLUDE_DIR', dirname(__DIR__));
+use Henri\Framework\Console\CLIApplication;
 
-    require INCLUDE_DIR . '/vendor/autoload.php';
-
-    // set up autoloading
-    include_once INCLUDE_DIR . '/vendor/henrivantsant/henri/Application/Bootstrap/Autoloading/Autoload.php';
-
-    // set up DI
-    include_once INCLUDE_DIR . '/vendor/henrivantsant/henri/Application/Bootstrap/DependencyInjection/DependencyInjection.php';
-} catch (\Exception $e) {
-    echo 'Autoload error: ' . $e->getMessage();
-    exit(1);
-}
-
-
-try {
-    // Build to application
-    global $containerBuilder;
-    $app = $containerBuilder->get('Henri\Framework\Console\Console');
-    $app->run();
-} catch (Exception $e) {
-    while($e) {
-        echo $e->getMessage();
-        echo $e->getTraceAsString();
-        echo "\n\n";
-        $e->getPrevious();
-    }
-    exit(0);
-}
+$CLIApplication = new CLIApplication();
+$CLIApplication->run();
 ```
 This should be all.
 

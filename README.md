@@ -67,9 +67,9 @@ This framework is not intended for building websites or big applications. The pu
 	1. User authentication
 1. What's next!
 	1. Native logging interface (status: in development)
-	Logging implementation using [Monolog](https://github.com/Seldaek/monolog)
 	1. Out of the box GraphQL support (status: expected early 2021)
 	1. PHP8 Compatibility (status: expected early 2021)
 	1. Overriding framework classes by setting preferences to the container (status: no expection yet)
 	1. Influence DI behaviour using Annotations (status: no expectation yet)
 	1. Default annotation reading service with PHP8 Annotations support (status: no expectation yet)
+	1. Support websockets
