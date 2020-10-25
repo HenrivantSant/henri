@@ -20,7 +20,7 @@ class CLIApplication {
      */
     public function run(): void {
         if (PHP_SAPI !== 'cli') {
-            echo 'bin/henri must be run as a CLI application';
+            echo 'bin/console must be run as a CLI application';
             exit(1);
         }
 

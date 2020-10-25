@@ -65,6 +65,7 @@ This framework is not intended for building websites or big applications. The pu
 	1. Create a user
 	1. Update user
 	1. User authentication
+1. [GraphQL](https://github.com/HenrivantSant/henri/blob/master/Docs/GraphQL.md#graphql)	
 1. What's next!
 	1. Native logging interface (status: in development)
 	1. Out of the box GraphQL support (status: expected early 2021)
