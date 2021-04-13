@@ -15,7 +15,7 @@ This framework is not intended for building websites or big applications. The pu
 - Logging service
 - CDN
 
-## Table of content
+## Table of contents
 1. [Routing](https://github.com/HenrivantSant/henri/blob/master/Docs/Routing.md#1-routing)
 	1. [Controllers](https://github.com/HenrivantSant/henri/blob/master/Docs/Routing.md#controllers)
 	1. [Route annotation](https://github.com/HenrivantSant/henri/blob/master/Docs/Routing.md#route-annotation)
