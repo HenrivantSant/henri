@@ -12,7 +12,7 @@ composer require henrivantsant/henri
 ```
 
 ## Deprecated
-Only security updates  will be done on this package. Recent package moved to https://github.com/HenrivantSant/swift.
+Only security updates  will be released on this package. This package is replaced by https://github.com/HenrivantSant/swift. 
 
 ### Purpose  
 This framework is not intended for building websites or big applications. The purpose of this framework is to provide a simple set of basic tools to build simple services, like: 
