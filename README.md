@@ -1,7 +1,5 @@
 # henri
 
-## Looking for contributors!
-
 ## Intro
 This is a simple, fast and basic PHP framework meant to write API's or simple programs in a fast and easy way. This is a not meant as a replacement for other frameworks,
 under the hood it uses a lot of the magic from [Symfony](https://symfony.com/), [Dibi](https://github.com/dg/dibi), [Unirest](https://github.com/Kong/unirest-php), [Monolog](https://github.com/Seldaek/monolog) and [Firebase](https://github.com/firebase/php-jwt).
