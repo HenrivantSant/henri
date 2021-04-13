@@ -7,6 +7,8 @@ services:
     autoconfigure: true
     public: true
 
+  Doctrine\Common\Annotations\AnnotationReader: ~
+
   Henri\Framework\:
     resource: 'vendor/henrivantsant/henri/Framework/*'
     exclude: ['Monolog/Logger']
