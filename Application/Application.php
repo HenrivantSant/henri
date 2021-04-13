@@ -12,7 +12,7 @@ if (!defined('INCLUDE_DIR')) {
 }
 
 use Henri\Application\Bootstrap\Bootstrap;
-
+use Exception;
 
 class Application {
 

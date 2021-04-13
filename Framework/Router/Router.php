@@ -17,30 +17,30 @@ use RuntimeException;
 
 class Router implements RouterInterface {
 
-	/**
-	 * @var Harvester $harvester
-	 */
-	private $harvester;
+    /**
+     * @var Harvester $harvester
+     */
+    private $harvester;
 
-	/**
-	 * @var HTTPRequest   $HTTPRequest
-	 */
-	private $HTTPRequest;
+    /**
+     * @var HTTPRequest   $HTTPRequest
+     */
+    private $HTTPRequest;
 
-	/**
-	 * @var Configuration $configuration
-	 */
-	private $configuration;
+    /**
+     * @var Configuration $configuration
+     */
+    private $configuration;
 
     /**
      * @var EventDispatcher $dispatcher
      */
-	private $dispatcher;
+    private $dispatcher;
 
-	/**
-	 * @var array
-	 */
-	protected $routeHarvest = array();
+    /**
+     * @var array
+     */
+    protected $routeHarvest = array();
 
     /**
      * @var array Array of all routes (incl. named routes).
@@ -85,132 +85,135 @@ class Router implements RouterInterface {
     }
 
     /**
-	 * Bind harvested routes to object
-	 *
-	 * @throws Exception
-	 */
-	public function bindRoutes() : void {
-		if (empty($this->routeHarvest)) {
-			return;
-		}
+     * Bind harvested routes to object
+     *
+     * @throws Exception
+     */
+    public function bindRoutes() : void {
+        if (empty($this->routeHarvest)) {
+            return;
+        }
 
-		foreach ($this->routeHarvest as $route) {
-			$this->addRoute($route);
-		}
-	}
+        foreach ($this->routeHarvest as $route) {
+            $this->addRoute($route);
+        }
+    }
 
-	/**
-	 * Get route from current url
-	 *
-	 * @return Route
-	 * @throws Exception
-	 */
-	public function getCurrentRoute(): Route {
-		$this->routeHarvest = $this->harvester->harvestRoutes();
+    /**
+     * Get route from current url
+     *
+     * @return Route
+     * @throws Exception
+     */
+    public function getCurrentRoute(): Route {
+        $this->routeHarvest = $this->harvester->harvestRoutes();
 
         /**
          * @var OnBeforeRoutesCompileEvent $onBeforeCompileRoutes
          */
-		$onBeforeCompileRoutes = $this->dispatcher->dispatch(
-		    new OnBeforeRoutesCompileEvent($this->routeHarvest, $this->matchTypes),
+        $onBeforeCompileRoutes = $this->dispatcher->dispatch(
+            new OnBeforeRoutesCompileEvent($this->routeHarvest, $this->matchTypes),
             OnBeforeRoutesCompileEvent::class
         );
 
         /**
          * Reassign possibly changed routes and match types
          */
-		$this->routeHarvest = $onBeforeCompileRoutes->getRoutes();
-		$this->matchTypes   = $onBeforeCompileRoutes->getMatchTypes();
+        $this->routeHarvest = $onBeforeCompileRoutes->getRoutes();
+        $this->matchTypes   = $onBeforeCompileRoutes->getMatchTypes();
 
-		$this->bindRoutes();
-		$match = $this->match();
+        $this->bindRoutes();
+        $match = $this->match();
 
-		if (is_null($match)) {
-			throw new NotFoundException('Not found');
-		}
+        if (is_null($match)) {
+            throw new NotFoundException('Not found');
+        }
 
-		return $match;
-	}
+        return $match;
+    }
 
-	/**
-	 * Match a given Request Url against stored routes
+    /**
+     * Match a given Request Url against stored routes
      *
-	 * @param string $requestUrl
-	 * @param string $requestMethod
+     * @param string $requestUrl
+     * @param string $requestMethod
      *
-	 * @return Route Matched Route object with information on success, false on failure (no match).
-	 */
-	public function match(string $requestUrl = null, string $requestMethod = null): ?Route {
-		$params = [];
+     * @return Route Matched Route object with information on success, false on failure (no match).
+     */
+    public function match(string $requestUrl = null, string $requestMethod = null): ?Route {
+        $params = [];
 
-		// set Request Url if it isn't passed as parameter
-		$requestUrl = is_null($requestUrl) ? trim($this->HTTPRequest->request->getRequest()['REQUEST_URI'], '/') : $requestUrl;
+        // set Request Url if it isn't passed as parameter
+        $requestUrl = is_null($requestUrl) ? trim($this->HTTPRequest->request->getRequest()['REQUEST_URI'], '/') : $requestUrl;
 
-		// strip base path from request url
-		$requestUrl = substr($requestUrl, strlen($this->basePath));
+        // strip base path from request url
+        $requestUrl = substr($requestUrl, strlen($this->basePath));
         $requestUrl = str_replace( array( $this->configuration->get( 'routing.baseurl' ), '/api' ), '', $requestUrl );
 
-		// Strip query string (?a=b) from Request Url
-		if (($strpos = strpos($requestUrl, '?')) !== false) {
-			$requestUrl = substr($requestUrl, 0, $strpos);
-		}
+        // Strip query string (?a=b) from Request Url
+        if (($strpos = strpos($requestUrl, '?')) !== false) {
+            $requestUrl = substr($requestUrl, 0, $strpos);
+        }
 
-		// Remove trailing slash if not root url
-		if ($requestUrl !== '/' && substr($requestUrl, -1) === '/') {
-			$requestUrl = substr($requestUrl, 0, -1);
-		}
+        // Remove trailing slash if not root url
+        if ($requestUrl !== '/' && substr($requestUrl, -1) === '/') {
+            $requestUrl = substr($requestUrl, 0, -1);
+        }
 
-		$lastRequestUrlChar = $requestUrl[strlen($requestUrl) - 1];
+        $lastRequestUrlChar = $requestUrl[strlen($requestUrl) - 1];
 
-		// set Request Method if it isn't passed as a parameter
-		$requestMethod = is_null($requestMethod) ? $this->HTTPRequest->request->getMethod() : $requestMethod;
+        // set Request Method if it isn't passed as a parameter
+        $requestMethod = is_null($requestMethod) ? $this->HTTPRequest->request->getMethod() : $requestMethod;
 
-		foreach ($this->routes as $handler) {
-			$method_match = $handler->methodApplies($requestMethod);
+        foreach ($this->routes as $handler) {
+            $method_match = $handler->methodApplies($requestMethod);
 
-			// Method did not match, continue to next route.
-			if (!$method_match) {
-				continue;
-			}
+            // Method did not match, continue to next route.
+            if (!$method_match) {
+                continue;
+            }
 
-			if ($handler->getFullRegex() === '*') {
-				// * wildcard (matches all)
-				$match = true;
-			} elseif (isset($handler->getFullRegex()[0]) && $handler->getFullRegex()[0] === '@') {
-				// @ regex delimiter
-				$pattern = '`' . substr($handler->getFullRegex(), 1) . '`u';
-				$match   = preg_match($pattern, $requestUrl, $params) === 1;
-			} elseif (($position = strpos($handler->getFullRegex(), '[')) === false) {
-				// No params in url, do string comparison
-				$match = strcmp($requestUrl, $handler->getFullRegex()) === 0;
-			} else {
-				// Compare longest non-param string with url before moving on to regex
-				// Check if last character before param is a slash, because it could be optional if param is optional too (see https://github.com/dannyvankooten/AltoRouter/issues/241)
-				if (strncmp($requestUrl, $handler->getFullRegex(), $position) !== 0 && ($lastRequestUrlChar === '/' || $handler->getFullRegex()[$position - 1] !== '/')) {
-					continue;
-				}
+            if ($handler->getFullRegex() === '*') {
+                // * wildcard (matches all)
+                $match = true;
+            } elseif (isset($handler->getFullRegex()[0]) && $handler->getFullRegex()[0] === '@') {
+                // @ regex delimiter
+                $pattern = '`' . substr($handler->getFullRegex(), 1) . '`u';
+                $match   = preg_match($pattern, $requestUrl, $params) === 1;
+            } elseif (($position = strpos($handler->getFullRegex(), '[')) === false) {
+                // No params in url, do string comparison
+                $match = strcmp($requestUrl, $handler->getFullRegex()) === 0;
+                if (!$match) {
+                    $match = strcmp( '/' . $requestUrl, $handler->getFullRegex()) === 0;
+                }
+            } else {
+                // Compare longest non-param string with url before moving on to regex
+                // Check if last character before param is a slash, because it could be optional if param is optional too (see https://github.com/dannyvankooten/AltoRouter/issues/241)
+                if (strncmp($requestUrl, $handler->getFullRegex(), $position) !== 0 && ($lastRequestUrlChar === '/' || $handler->getFullRegex()[$position - 1] !== '/')) {
+                    continue;
+                }
 
-				$regex = $this->compileRoute($handler->getFullRegex());
-				$match = preg_match($regex, $requestUrl, $params) === 1;
-			}
+                $regex = $this->compileRoute($handler->getFullRegex());
+                $match = preg_match($regex, $requestUrl, $params) === 1;
+            }
 
-			if ($match) {
-				if ($params) {
-					foreach ($params as $key => $value) {
-						if (is_numeric($key)) {
-							unset($params[$key]);
-						}
-					}
-				}
+            if ($match) {
+                if ($params) {
+                    foreach ($params as $key => $value) {
+                        if (is_numeric($key)) {
+                            unset($params[$key]);
+                        }
+                    }
+                }
 
-				$handler->params = $params;
+                $handler->params = $params;
 
-				return $handler;
-			}
-		}
+                return $handler;
+            }
+        }
 
-		return null;
-	}
+        return null;
+    }
 
     /**
      * Retrieve array of all available routes
