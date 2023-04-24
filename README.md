@@ -1,5 +1,8 @@
 # henri
 
+## Deprecated
+This package is unmaintained. The project is replaced by [Swift](https://github.com/SwiftAPI/swift). 
+
 ## Intro
 This is a simple, fast and basic PHP framework meant to write API's or simple programs in a fast and easy way. This is a not meant as a replacement for other frameworks,
 under the hood it uses a lot of the magic from [Symfony](https://symfony.com/), [Dibi](https://github.com/dg/dibi), [Unirest](https://github.com/Kong/unirest-php), [Monolog](https://github.com/Seldaek/monolog) and [Firebase](https://github.com/firebase/php-jwt).
@@ -8,9 +11,6 @@ Get it from Composer https://packagist.org/packages/henrivantsant/henri.
 ```php
 composer require henrivantsant/henri
 ```
-
-## Deprecated
-Only security updates  will be released on this package. This package is replaced by [Swift](https://github.com/HenrivantSant/swift). 
 
 ### Purpose  
 This framework is not intended for building websites or big applications. The purpose of this framework is to provide a simple set of basic tools to build simple services, like: 
